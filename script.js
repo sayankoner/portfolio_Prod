@@ -84,6 +84,7 @@ if (contactForm) {
         e.preventDefault();
 
         const formData = new FormData(this);
+        formData.append('access_key', '42501d7b-f4e3-425b-b6f9-a9d2ed7d0d31');
         const submitBtn = this.querySelector('input[type="submit"]');
         const originalBtnValue = submitBtn.value;
 
@@ -99,17 +100,40 @@ if (contactForm) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Success feedback
-                    alert('Message Sent Successfully! verify your email to see the message.');
+                    // Success feedback using SweetAlert2
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Message Sent Successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'Cool',
+                        confirmButtonColor: '#0ea5e9', // Matches brand color
+                        background: '#1a2236',
+                        color: '#e2e8f0'
+                    });
                     contactForm.reset();
                 } else {
                     // Error feedback
-                    alert('Something went wrong: ' + data.message);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong: ' + data.message,
+                        icon: 'error',
+                        confirmButtonText: 'Try Again',
+                        confirmButtonColor: '#ff5f56',
+                        background: '#1a2236',
+                        color: '#e2e8f0'
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'An error occurred. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'Close',
+                    background: '#1a2236',
+                    color: '#e2e8f0'
+                });
             })
             .finally(() => {
                 submitBtn.value = originalBtnValue;

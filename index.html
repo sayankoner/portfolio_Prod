@@ -168,14 +168,7 @@
       It automatically routes the form data to the email address specified in the action.
       It uses a standard POST request.
     -->
-        <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
-            <input type="hidden" name="access_key" value="42501d7b-f4e3-425b-b6f9-a9d2ed7d0d31">
-            <!-- HIDDEN INPUT: Sends a thank you message after submission -->
-            <input type="hidden" name="_next" value="From submission Sussessfully!">
-
-            <!-- HIDDEN INPUT: Prevents a default success page and keeps the user on the site (optional, but good practice) -->
-            <input type="hidden" name="_autoresponse"
-                value="Thank you for reaching out! I will respond to your inquiry shortly.">
+        <form id="contact-form">
 
             <div class="input-box">
                 <!-- Renamed 'Full Name' to 'Name' for FormSubmit compatibility -->
@@ -207,6 +200,7 @@
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
 </body>
 
