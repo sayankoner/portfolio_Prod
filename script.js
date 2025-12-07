@@ -75,3 +75,47 @@ window.addEventListener('mousemove', (e) => {
         top: `${posY}px`
     }, { duration: 500, fill: "forwards" });
 });
+
+/* Contact Form Handling */
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const submitBtn = this.querySelector('input[type="submit"]');
+        const originalBtnValue = submitBtn.value;
+
+        submitBtn.value = 'Sending...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.cursor = 'wait';
+
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Success feedback
+                    alert('Message Sent Successfully! verify your email to see the message.');
+                    contactForm.reset();
+                } else {
+                    // Error feedback
+                    alert('Something went wrong: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.value = originalBtnValue;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+            });
+    });
+}

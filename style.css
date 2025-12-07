@@ -139,6 +139,7 @@ span.multiple-text {
     font-family: 'Space Grotesk', sans-serif;
     background: linear-gradient(to right, #fff, var(--main-color));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -613,12 +614,7 @@ pre {
         padding-right: 25px;
     }
 
-    .timeline-item::before {
-        left: 60px;
-        border: medium solid white;
-        border-width: 10px 10px 10px 0;
-        border-color: transparent white transparent transparent;
-    }
+    /* Removed conflicting ::before arrow, using .timeline-arrow span instead */
 
     .left-container,
     .right-container {
@@ -630,11 +626,15 @@ pre {
         left: 10px;
     }
 
+    /* Fix Arrow direction for single column layout (all point leftwards to the line) */
     .left-container .timeline-arrow,
     .right-container .timeline-arrow {
         border-right: 15px solid var(--glass-bg);
         border-left: 0;
         left: -15px;
+        /* Position it correctly relative to the box */
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
     }
 }
 
@@ -652,6 +652,9 @@ pre {
         background: var(--bg-color);
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         display: none;
+        z-index: 999;
+        /* Ensure it stays on top */
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1);
     }
 
     .navbar.active {
@@ -691,5 +694,64 @@ pre {
 
     .contact form .input-box input {
         width: 100%;
+    }
+}
+
+/* Mobile Devices (phones, less than 480px) */
+@media (max-width: 480px) {
+    html {
+        font-size: 50%;
+    }
+
+    .home-content h1 {
+        font-size: 4rem;
+    }
+
+    .home-content h3 {
+        font-size: 2.2rem;
+    }
+
+    .home-img {
+        width: 90vw;
+    }
+
+    .about-content h2 {
+        font-size: 3.5rem;
+    }
+
+    .timeline-item {
+        padding-left: 50px;
+    }
+
+    .timeline-item::before {
+        left: 45px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+        /* Add spacing below button */
+    }
+
+    .contact form .input-box {
+        flex-direction: column;
+    }
+
+    .contact form .input-box input {
+        width: 100%;
+    }
+}
+
+/* Touch Devices (iPad, Tablets, Phones) - Disable Custom Cursor */
+@media (hover: none) {
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+
+    body {
+        cursor: auto;
     }
 }
